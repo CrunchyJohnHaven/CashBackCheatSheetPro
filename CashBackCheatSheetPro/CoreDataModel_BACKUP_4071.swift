@@ -41,12 +41,18 @@ class CardModel {
 
             
 //            request.predicate = NSPredicate( format: "category_code = %@", cards_word as! CVarArg )
+<<<<<<< HEAD
+            request.predicate = NSPredicate( format: "%K < %@", "category_code", cards_word as! CVarArg )
+            print("**** REQUEST.PREDICATE *****: ", request.predicate)
+//            request.predicate = NSPredicate( format: "category_code < %@", cards_word )
+=======
 //            request.predicate = NSPredicate( format: "%K < %@", "category_code", cards_word as! CVarArg )
 //            request.predicate = NSPredicate( format: "%K LIKE %@", "category_code", cards_word as! CVarArg )
 //            request.predicate = NSPredicate( format: "%K CONTAINS %@", "category_code", cards_word as! CVarArg )
 //            request.predicate = NSPredicate( format: "category_code CONTAINS %@", cards_word as! CVarArg )
 //            request.predicate = NSPredicate( format: "%@ CONTAINS %K", cards_word as! CVarArg, "category_code"  )
             request.predicate = NSPredicate( format: "%K in %@", "category_code", arr as! CVarArg )
+>>>>>>> dbb892a84dc281f763d887f2c93ef612c8a14208
         }
         
 //        request.predicate = NSPredicate( format: "ranking_within_category = %@", ranking_within_category as! CVarArg )

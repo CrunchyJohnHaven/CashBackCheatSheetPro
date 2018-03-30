@@ -21,32 +21,9 @@ class CardModel {
         let request = NSFetchRequest<NSFetchRequestResult>( entityName: "Card" )
         
         if cards_word != nil{
-
-            var arr = [String]()
-            var code = String()
-            var count = 1
-            for i in cards_word! {
-                if i != "-" {
-                    code += String(i)
-                    if count == 4 {
-                        arr.append(code)
-                        code = ""
-                        count = 1
-                    } else {
-                        count += 1
-                    }
-                }
-            }
-            print (arr)
-
-            
 //            request.predicate = NSPredicate( format: "category_code = %@", cards_word as! CVarArg )
-//            request.predicate = NSPredicate( format: "%K < %@", "category_code", cards_word as! CVarArg )
-//            request.predicate = NSPredicate( format: "%K LIKE %@", "category_code", cards_word as! CVarArg )
-//            request.predicate = NSPredicate( format: "%K CONTAINS %@", "category_code", cards_word as! CVarArg )
-//            request.predicate = NSPredicate( format: "category_code CONTAINS %@", cards_word as! CVarArg )
-//            request.predicate = NSPredicate( format: "%@ CONTAINS %K", cards_word as! CVarArg, "category_code"  )
-            request.predicate = NSPredicate( format: "%K in %@", "category_code", arr as! CVarArg )
+            request.predicate = NSPredicate( format: "%K < %@", "category_code", cards_word as! CVarArg )
+//            request.predicate = NSPredicate( format: "category_code < %@", cards_word )
         }
         
 //        request.predicate = NSPredicate( format: "ranking_within_category = %@", ranking_within_category as! CVarArg )
