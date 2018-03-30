@@ -307,7 +307,6 @@ extension CategoryPickerVC: UITableViewDataSource, UITableViewDelegate {
         print("self.image1: ", self.image1)
         for key in self.image1 {
             print("KEY: ", key)
-            print
             if cardArray[indexPath.row] == "\(key)" {
                 print("*********MATCH*********")
                 cell.cardImage.image = self.image[indexPath.row]
