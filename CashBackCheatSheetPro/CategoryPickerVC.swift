@@ -23,21 +23,28 @@ class CategoryPickerVC: UIViewController, UIPickerViewDataSource, UIPickerViewDe
     @IBOutlet weak var pickerView: UIPickerView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        refreshView()
+//                        seedCards(string: self.categoryPicked)
+//                        seedCategories()
+//                        seedRankingCardWithinCategory()
+        pullFunction()
+        cardArr = CardModel.shared.getAll()
+        categoryArr = CategoryModel.shared.getAll()
+        rankingCardInCategoryArr = RankingCardWithinCategoryModel.shared.getAll()
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 100
         pickerView.delegate = self
         pickerView.dataSource = self
-        
+
 
     }
     override func viewWillAppear(_ animated: Bool){
-        refreshView()
-        pullFunction()
+//        refreshView()
+//        pullFunction()
     }
     
     func pullFunction() {
+        print("PullFunction")
         cardArray = []
         for i in cardArr {
             self.cardArray.append(i.title!)
@@ -47,19 +54,14 @@ class CategoryPickerVC: UIViewController, UIPickerViewDataSource, UIPickerViewDe
             self.fullCardArray.append(i)
             print("self.fullCardArray: ", self.fullCardArray[0].title!)
         }
+        print("*****End Pull Function*****")
     }
     func refreshView() {
         print("*****refreshView*****")
-        deleteAllCards(cards: cardArr)
-        deleteAllCategories(categories: categoryArr)
-        deleteAllRankings(rankings: rankingCardInCategoryArr)
-        seedCards(string: self.categoryPicked)
-        seedCategories()
-        seedRankingCardWithinCategory()
-        cardArr = CardModel.shared.getAll()
-        categoryArr = CategoryModel.shared.getAll()
-        rankingCardInCategoryArr = RankingCardWithinCategoryModel.shared.getAll()
-        tableView.reloadData()
+//        deleteAllCards(cards: cardArr)
+//        deleteAllCategories(categories: categoryArr)
+//        deleteAllRankings(rankings: rankingCardInCategoryArr)
+//        tableView.reloadData()
     }
     func deleteAllCategories(categories: [Category]) {
         print("***** Delete All Categories*****")
@@ -83,6 +85,7 @@ class CategoryPickerVC: UIViewController, UIPickerViewDataSource, UIPickerViewDe
         return categoryArr.count
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
 //        print("categoryArr[row]: ", categoryArr[row])
         return categoryArr[row].name
     }
@@ -93,29 +96,9 @@ class CategoryPickerVC: UIViewController, UIPickerViewDataSource, UIPickerViewDe
 
         tableView.reloadData()
         }
-//    func reorderCards(category: String) {
-//        print("**** reorderCards ******")
-//        print("category: ", category)
-//    }
-//
-    func printEntities(){
-        categoryArr = CategoryModel.shared.getAll()
-        print("******** Category seeded with: *********")
-        for i in categoryArr {
-            print( i.name!, i.cards_word! )
-        }
-        cardArr = CardModel.shared.getAll()
-        print("******** Card seeded with: *********")
-        for i in cardArr {
-            print( i.title!, i.annual_fee!, i.cash_back_terms!, i.link_to_apply!, i.other_terms!, i.category_code! )
-        }
-        print("******** Ranks seeded with: ********")
-        for i in rankingCardInCategoryArr {
-            print("category \(i.category!.name!), rank \(i.rank), card: \(i.card!.title!)")
-        }
-    }
 
     func seedCategories(){
+        print("***** SeedCategories ******")
         let categories = [
             "Grocery Stores",
             "Restaurants & Coffee",
@@ -137,6 +120,7 @@ class CategoryPickerVC: UIViewController, UIPickerViewDataSource, UIPickerViewDe
             "cidc-chfu-wfcw",
         ]
         for i in 0..<categories.count {
+            print("CATEGORIES CREATED: ", i)
             CategoryModel.shared.create( name: categories[i], cards_word: cards_word[i] )
         }
 
@@ -144,6 +128,7 @@ class CategoryPickerVC: UIViewController, UIPickerViewDataSource, UIPickerViewDe
 //        for i in categoryArr {
 //            print("category seeded with:", i.name )
 //        }
+        print("***** End SeedCategories ******")
     }
     
     func seedCards(string: String){
@@ -220,43 +205,8 @@ class CategoryPickerVC: UIViewController, UIPickerViewDataSource, UIPickerViewDe
 
 
         ]
-        if string == "Grocery Stores" {
-            print("Cards[0]:", cards[0])
-            var cardArray = [cards[0], cards[1],cards[2],cards[3],cards[4],cards[5],cards[6],cards[7]]
-            for i in cardArray {
-                print("I:", i["card_title"]!)
-            }
-        }
-//        if string == "Restaurants & Coffee" {
-//            print("Restaurants & Coffee")
-//             let cardSeed = [cards[0], cards[1],cards[2],cards[3],cards[4],cards[5],cards[6],cards[7]]
-//        }
-//        if string == "Gas" {
-//            print("Gas")
-//            let cardSeed = [cards[0], cards[1],cards[2],cards[3],cards[4],cards[5],cards[6],cards[7]]
-//        }
-//        if string == "Pharmacies" {
-//            print("Pharmacies")
-//             let cardSeed = [cards[0], cards[1],cards[2],cards[3],cards[4],cards[5],cards[6],cards[7]]
-//        }
-//        if string == "Wholesale Clubs" {
-//            print("Wholesale Clubs")
-//             let cardSeed = [cards[0], cards[1],cards[2],cards[3],cards[4],cards[5],cards[6],cards[7]]
-//        }
-//        if string == "Select Department Stores" {
-//            print("Select Department Stores")
-//             let cardSeed = [cards[0], cards[1],cards[2],cards[3],cards[4],cards[5],cards[6],cards[7]]
-//        }
-//        if string == "Taxi" {
-//            print("Taxi")
-//             let cardSeed = [[cards[0], cards[1],cards[2],cards[3],cards[4],cards[5],cards[6],cards[7]]
-//        }
-//        if string == "Other" {
-//            print("Other")
-//             let cardSeed = [[cards[0], cards[1],cards[2],cards[3],cards[4],cards[5],cards[6],cards[7]]
-//        }
-        
         for i in cards {
+            print("CARDS CREATED: ", i)
             CardModel.shared.create( title: i["card_title"]!, annual_fee: i["annual_fee"]!, cash_back_terms: i["cash_back_terms"]!, link_to_apply: i["link_to_apply"]!, other_terms: i["other_terms"]!, category_code: i["category_code"]! )
         }
         
@@ -345,14 +295,19 @@ class CategoryPickerVC: UIViewController, UIPickerViewDataSource, UIPickerViewDe
 }
 
 extension CategoryPickerVC: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("******* TableDelegate  ******* cardArr.count: ", cardArr.count)
         return cardArr.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        print("******* Start CellForRowAt *******")
         let cell = tableView.dequeueReusableCell(withIdentifier: "CardCell", for: indexPath) as! CardCell
         cell.cardImage.image = self.image[indexPath.row]
+        print("self.image1: ", self.image1)
         for key in self.image1 {
+            print("KEY: ", key)
+            print
             if cardArray[indexPath.row] == "\(key)" {
                 print("*********MATCH*********")
                 cell.cardImage.image = self.image[indexPath.row]
@@ -363,15 +318,11 @@ extension CategoryPickerVC: UITableViewDataSource, UITableViewDelegate {
         
 
 //        cell.cardImage.image = // PLACEHOLDER FOR THE IMAGE
-        
+        print("******* End CellForRowAt *******")
         return cell
     }
 }
-extension Card {
-    class func findCard(category: String) {
-        
-    }
-}
+
 //    // Create Mutable Set
 //    let users = account.mutableSetValue(forKey: #keyPath(Account.users))
 //

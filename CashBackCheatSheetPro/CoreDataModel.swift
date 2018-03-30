@@ -23,6 +23,7 @@ class CardModel {
         if cards_word != nil{
 //            request.predicate = NSPredicate( format: "category_code = %@", cards_word as! CVarArg )
             request.predicate = NSPredicate( format: "%K < %@", "category_code", cards_word as! CVarArg )
+            print("**** REQUEST.PREDICATE *****: ", request.predicate)
 //            request.predicate = NSPredicate( format: "category_code < %@", cards_word )
         }
         
